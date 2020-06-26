@@ -1,6 +1,7 @@
+import { composeWithDevTools } from 'redux-devtools-extension';
 import { combineReducers } from 'redux';
 // import { configureStore } from '@reduxjs/toolkit';
-import { createStore, applyMiddleware } from 'redux';
+import { createStore, applyMiddleware, compose, Store } from 'redux';
 import createSagaMiddleware from 'redux-saga';
 
 import { reducer as colorReducer } from './components/App/reducer';
@@ -10,10 +11,15 @@ export const reducerAll = combineReducers({
     color: colorReducer
 });
 
-// export const store = configureStore({
-//     reducer: reducerAll
-// });
 const sagaMiddleware = createSagaMiddleware();
 
-export const store = createStore(reducerAll, applyMiddleware(sagaMiddleware));
+export let store: Store;
+if (Object.keys(window).indexOf('__REDUX_DEVTOOLS_EXTENSION__') > 0) {
+    store = createStore(
+        reducerAll,
+        compose(applyMiddleware(sagaMiddleware), composeWithDevTools())
+    );
+} else {
+    store = createStore(reducerAll, applyMiddleware(sagaMiddleware));
+}
 sagaMiddleware.run(rootSaga);
