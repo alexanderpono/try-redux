@@ -24,7 +24,8 @@ export class App extends React.Component<{}, AppState> {
     };
 
     dispatchLoadBlue = () => {
-        dispatch(loadBlue());
+        const fetchBlue = () => new Promise((resolve) => setTimeout(resolve, 1000));
+        dispatch(loadBlue(fetchBlue));
     };
 
     storeChange = () => {

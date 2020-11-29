@@ -51,11 +51,9 @@ export const inc: ActionCreator = () => ({
     payload: {}
 });
 
-export const loadBlue = () => (dispatch: AsyncDispatch) => {
-    const fetchBlue = () => new Promise((resolve) => setTimeout(resolve, 1000));
-
+export const loadBlue = (fetchBlue: Function) => (dispatch: AsyncDispatch) => {
     dispatch(colorLoading());
-    fetchBlue()
+    return fetchBlue()
         .then(() => {
             dispatch(colorLoadOk());
             dispatch(setBlue());
@@ -75,7 +73,6 @@ export function reducer(state: ColorState = defaultState, action: ColorAction): 
         case 'INCREMENT': {
             return {
                 ...state
-                // color: action.payload.color
             };
         }
         case COLOR_LOADING: {
