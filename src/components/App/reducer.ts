@@ -72,7 +72,8 @@ export function reducer(state: ColorState = defaultState, action: ColorAction): 
         }
         case 'INCREMENT': {
             return {
-                ...state
+                ...state,
+                color: state.color === 'red' ? 'blue' : 'red'
             };
         }
         case COLOR_LOADING: {

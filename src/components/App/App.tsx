@@ -3,7 +3,7 @@ import { HelloWorld } from '../HelloWorld';
 import { Box } from '../Box';
 import { Provider } from 'react-redux';
 import { store, AppState, defaultState, dispatch } from '../../store';
-import { loadBlue, setBlue, setRed } from './reducer';
+import { loadBlue, setBlue, setRed, incAsync } from './reducer';
 
 function selectColor(state: AppState) {
     return state.color;
@@ -28,6 +28,10 @@ export class App extends React.Component<{}, AppState> {
         dispatch(loadBlue(fetchBlue));
     };
 
+    dispatchIncAsync = () => {
+        dispatch(incAsync());
+    };
+
     storeChange = () => {
         this.setState(store.getState());
     };
@@ -47,6 +51,7 @@ export class App extends React.Component<{}, AppState> {
                     <button onClick={this.dispatchBlue}>setBlue</button>
                     <button onClick={this.dispatchRed}>setRed</button>
                     <button onClick={this.dispatchLoadBlue}>loadBlue</button>
+                    <button onClick={this.dispatchIncAsync}>incAsync</button>
                 </div>
             </Provider>
         );
