@@ -1,4 +1,6 @@
 import { put, takeEvery, all, call } from 'redux-saga/effects';
+import { colorLoading, colorLoadOk, setRed, colorLoadErr } from './reducer';
+import { fetchRed } from './api';
 
 export function* helloSaga() {
     console.log('Hello Sagas!');
@@ -17,8 +19,23 @@ export function* watchIncrementAsync() {
     yield takeEvery('INCREMENT_ASYNC', incrementAsync);
 }
 
+export function* loadRed() {
+    yield put(colorLoading());
+    try {
+        yield call(fetchRed);
+        yield put(colorLoadOk());
+        yield put(setRed());
+    } catch (e) {
+        yield put(colorLoadErr());
+    }
+}
+
+export function* watchLoadRed() {
+    yield takeEvery('LOAD_RED', loadRed);
+}
+
 // notice how we now only export the rootSaga
 // single entry point to start all Sagas at once
 export function* rootSaga() {
-    yield all([helloSaga(), watchIncrementAsync()]);
+    yield all([helloSaga(), watchIncrementAsync(), watchLoadRed()]);
 }

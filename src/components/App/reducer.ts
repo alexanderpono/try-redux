@@ -18,6 +18,7 @@ const SET_COLOR = 'SET_COLOR';
 const COLOR_LOADING = 'COLOR_LOADING';
 const COLOR_LOAD_OK = 'COLOR_LOAD_OK';
 const COLOR_LOAD_ERR = 'COLOR_LOAD_ERR';
+export const LOAD_RED = 'LOAD_RED';
 
 type ChangeColorAction = { type: string; payload: { color: string } };
 type IncAction = { type: string; payload: {} };
@@ -48,6 +49,10 @@ export const incAsync: ActionCreator = () => ({
 });
 export const inc: ActionCreator = () => ({
     type: 'INCREMENT',
+    payload: {}
+});
+export const loadRed: ActionCreator = () => ({
+    type: 'LOAD_RED',
     payload: {}
 });
 
