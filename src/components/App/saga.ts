@@ -1,6 +1,6 @@
 import { put, takeEvery, all, call } from 'redux-saga/effects';
 import { colorLoading, colorLoadOk, setRed, colorLoadErr } from './reducer';
-import { fetchRed } from './api';
+import { fetchRedErr } from './api';
 
 export function* helloSaga() {
     console.log('Hello Sagas!');
@@ -19,7 +19,7 @@ export function* watchIncrementAsync() {
     yield takeEvery('INCREMENT_ASYNC', incrementAsync);
 }
 
-export function* loadRed() {
+export function* loadRed(fetchRed: () => Promise<void>) {
     yield put(colorLoading());
     try {
         yield call(fetchRed);
@@ -31,7 +31,7 @@ export function* loadRed() {
 }
 
 export function* watchLoadRed() {
-    yield takeEvery('LOAD_RED', loadRed);
+    yield takeEvery('LOAD_RED', loadRed, fetchRedErr);
 }
 
 // notice how we now only export the rootSaga
